@@ -268,3 +268,21 @@ INSTALL(FILES ${PROJECT_BINARY_DIR}/g2o/config.h DESTINATION ${CMAKE_INSTALL_PRE
 # Include the subdirectories
 ADD_SUBDIRECTORY(EXTERNAL)
 ADD_SUBDIRECTORY(g2o)
+
+# install cmake config files in lib install directory 
+#export(TARGETS g2o FILE "${PROJECT_BINARY_DIR}/G2OTargets.cmake") 
+set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include") 
+set(CONF_LIBRARY_DIR "${CMAKE_INSTALL_PREFIX}/lib") 
+configure_file(cmake/G2OConfig.cmake.in 
+  "${PROJECT_BINARY_DIR}/G2OConfig.cmake" @ONLY) 
+
+configure_file(cmake/G2OConfigVersion.cmake.in 
+  "${PROJECT_BINARY_DIR}/G2OConfigVersion.cmake" @ONLY) 
+
+install(FILES 
+  "${PROJECT_BINARY_DIR}/G2OConfig.cmake" 
+  "${PROJECT_BINARY_DIR}/G2OConfigVersion.cmake" 
+  COMPONENT dev 
+  DESTINATION lib/g2o) 
+
+#install(EXPORT G2OTargets DESTINATION lib/g2o)
