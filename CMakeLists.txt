@@ -142,6 +142,8 @@ ELSE()
   MESSAGE(STATUS "Building LGPL code as static library (affects license of the binary)")
 ENDIF()
 
+OPTION(G2O_USE_GPL "Build examples that depend on GPL'd library parts (cholmod supernodal and modify)" ON)
+
 # Eigen library parallelise itself, though, presumably due to performance issues
 # OPENMP is experimental. We experienced some slowdown with it
 SET(G2O_USE_OPENMP OFF CACHE BOOL "Build g2o with OpenMP support (EXPERIMENTAL)")
@@ -269,20 +271,19 @@ INSTALL(FILES ${PROJECT_BINARY_DIR}/g2o/config.h DESTINATION ${CMAKE_INSTALL_PRE
 ADD_SUBDIRECTORY(EXTERNAL)
 ADD_SUBDIRECTORY(g2o)
 
-# install cmake config files in lib install directory 
-#export(TARGETS g2o FILE "${PROJECT_BINARY_DIR}/G2OTargets.cmake") 
+
+
+# install cmake config file in lib install directory 
+# set directories used in config file template
 set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include") 
 set(CONF_LIBRARY_DIR "${CMAKE_INSTALL_PREFIX}/lib") 
+# fill template 
 configure_file(cmake/G2OConfig.cmake.in 
   "${PROJECT_BINARY_DIR}/G2OConfig.cmake" @ONLY) 
 
-configure_file(cmake/G2OConfigVersion.cmake.in 
-  "${PROJECT_BINARY_DIR}/G2OConfigVersion.cmake" @ONLY) 
-
+# install 
 install(FILES 
   "${PROJECT_BINARY_DIR}/G2OConfig.cmake" 
-  "${PROJECT_BINARY_DIR}/G2OConfigVersion.cmake" 
   COMPONENT dev 
   DESTINATION lib/g2o) 
 
-#install(EXPORT G2OTargets DESTINATION lib/g2o)
