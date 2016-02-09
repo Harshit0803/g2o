@@ -570,6 +570,7 @@ namespace g2o{
   void SparseOptimizer::setAlgorithm(OptimizationAlgorithm* algorithm)
   {
     if (_algorithm) // reset the optimizer for the formerly used solver
+      //Why not delete it here?
       _algorithm->setOptimizer(0);
     _algorithm = algorithm;
     if (_algorithm)

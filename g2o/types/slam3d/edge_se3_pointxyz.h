@@ -47,12 +47,16 @@ namespace g2o {
     virtual bool read(std::istream& is);
     virtual bool write(std::ostream& os) const;
 
-    // return the error estimate as a 3-vector
+    // return the error estimate as a 3-vector in world coordinates
     void computeError();
     // jacobian
     virtual void linearizeOplus();
     
 
+    /** 
+     * Measurement is a 3-vector in world coordinates
+     * (e.g. meter)
+     */
     virtual void setMeasurement(const Vector3D& m){
       _measurement = m;
     }

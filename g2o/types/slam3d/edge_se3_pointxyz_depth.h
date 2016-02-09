@@ -46,12 +46,21 @@ namespace g2o {
     virtual bool read(std::istream& is);
     virtual bool write(std::ostream& os) const;
 
-    // return the error estimate as a 3-vector
+    /** 
+     * return the error estimate as a 3-vector, where the first two dimensions
+     * represent the reprojection error in pixels, while the third dimension
+     * is the difference in depth.
+     */
     void computeError();
     // jacobian
     virtual void linearizeOplus();
     
 
+    /** 
+     * Measurement is a 3-vector, where the first two dimensions
+     * represent the pixel coordinates, and the third dimension
+     * is the depth.
+     */
     virtual void setMeasurement(const Vector3D& m){
       _measurement = m;
     }

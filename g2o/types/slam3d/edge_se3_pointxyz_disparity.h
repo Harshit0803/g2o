@@ -49,13 +49,22 @@ namespace g2o {
     virtual bool read(std::istream& is);
     virtual bool write(std::ostream& os) const;
 
-    // return the error estimate as a 3-vector
+    /** 
+     * return the error estimate as a 3-vector, where the first two dimensions
+     * represent the reprojection error in pixels, while the third dimension
+     * is the difference of the inverse depth values.
+     */
     void computeError();
 
 #ifdef EDGE_PROJECT_DISPARITY_ANALYTIC_JACOBIAN
     virtual void linearizeOplus();
 #endif
 
+    /** 
+     * Measurement is a 3-vector, where the first two dimensions
+     * represent the pixel coordinates, and the third dimension
+     * is the inverse depth.
+     */
     virtual void setMeasurement(const Vector3D& m){
       _measurement = m;
     }

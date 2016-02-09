@@ -382,7 +382,8 @@ namespace g2o {
         //! if NOT NULL, error of this edge will be robustifed with the kernel
         RobustKernel* robustKernel() const { return _robustKernel;}
         /**
-         * specify the robust kernel to be used in this edge
+         * specify the robust kernel to be used in this edge.
+         * Takes ownership of the pointer.
          */
         void setRobustKernel(RobustKernel* ptr);
 
@@ -610,6 +611,10 @@ namespace g2o {
 
     bool addParameter(Parameter* p) {
       return _parameters.addParameter(p);
+    }
+
+    const Parameter* parameter(int id) const {
+      return _parameters.getParameter(id);
     }
 
     Parameter* parameter(int id) {

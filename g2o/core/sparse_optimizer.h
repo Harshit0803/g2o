@@ -217,6 +217,7 @@ namespace g2o {
     //! the solver used by the optimizer
     const OptimizationAlgorithm* algorithm() const { return _algorithm;}
     OptimizationAlgorithm* solver() { return _algorithm;}
+    //! set the solver to use. Takes ownership (i.e. deletes it on destruction)
     void setAlgorithm(OptimizationAlgorithm* algorithm);
 
     //! push the estimate of a subset of the variables onto a stack
