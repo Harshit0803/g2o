@@ -52,6 +52,8 @@ namespace g2o {
         return 1.;
       }
 
+      ///Compute the estimate of the second vertex given the estimate of the first one,
+      ///if the first vertex is in \p from. Otherwise vice versa. Second parameter is ignored.
       virtual void initialEstimate(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to);
 
     protected:

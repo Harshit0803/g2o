@@ -45,6 +45,11 @@ namespace g2o {
   class G2O_TYPES_SLAM3D_API EdgeSE3PointXYZDisparity : public BaseBinaryEdge<3, Vector3D, VertexSE3, VertexPointXYZ> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    /**
+     * Note, that you need to reference a parameter set before you add this Edge to an optimizer. 
+     * See: https://github.com/RainerKuemmerle/g2o/issues/34
+     * For this Edge class you need the parameter set to contain the camera projection matrix.
+     */
     EdgeSE3PointXYZDisparity();
     virtual bool read(std::istream& is);
     virtual bool write(std::ostream& os) const;
@@ -97,6 +102,11 @@ namespace g2o {
   private:
     Eigen::Matrix<double,3,9,Eigen::ColMajor> J; // jacobian before projection
     virtual bool resolveCaches();
+    ///params contains
+    /// - the projection (and inverse) Matrix containing the camera calibration
+    /// - the offset from the camera's "base_link" to the optical center.
+    ///   i.e., paramse->offset() is the relative position of the optical center
+    ///   with respect to an arbitrary external point.
     ParameterCamera* params;
     CacheCamera* cache;
   };

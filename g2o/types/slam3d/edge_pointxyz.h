@@ -38,6 +38,10 @@ namespace g2o {
   {
     public:
       EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+      /**
+       * Note, that you need to reference a parameter set before you add this Edge to an optimizer. 
+       * See: https://github.com/RainerKuemmerle/g2o/issues/34
+       */
         EdgePointXYZ();
 
       void computeError()

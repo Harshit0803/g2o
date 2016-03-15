@@ -84,9 +84,9 @@ namespace g2o {
 
     if (from_.count(from) > 0) {
       to->setEstimate(from->estimate() * _measurement);
-    } else
+    } else {
       from->setEstimate(to->estimate() * _measurement.inverse());
-    //cerr << "IE" << endl;
+    } 
   }
 
   EdgeSE3WriteGnuplotAction::EdgeSE3WriteGnuplotAction(): WriteGnuplotAction(typeid(EdgeSE3).name()){}
