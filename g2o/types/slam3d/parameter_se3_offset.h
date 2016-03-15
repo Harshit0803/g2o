@@ -80,15 +80,19 @@ namespace g2o {
       const ParameterSE3Offset* offsetParam() const { return _offsetParam;}
       void setOffsetParam(ParameterSE3Offset* offsetParam);
 
+      ///world to sensor ("node"), see also n2w()
       const Isometry3D& w2n() const { return _w2n;}
+      ///sensor ("node") to world: n2w() * x transforms a measurement x from the sensor coordinate 
+      ///frame to the world coordinate frame
       const Isometry3D& n2w() const { return _n2w;}
+      ///world to local
       const Isometry3D& w2l() const { return _w2l;}
 
     protected:
       ParameterSE3Offset* _offsetParam; ///< the parameter connected to the cache
-      Isometry3D _w2n;
-      Isometry3D _n2w;
-      Isometry3D _w2l;
+      Isometry3D _w2n; ///<world to "node", i.e., to sensor. Inverse of _n2w
+      Isometry3D _n2w; ///<node to world, i.e., _n2w * x transforms a measurement x from the sensor coordinate frame to the world coordinate frame
+      Isometry3D _w2l; ///<world to local
 
     protected:
       virtual bool resolveDependancies();

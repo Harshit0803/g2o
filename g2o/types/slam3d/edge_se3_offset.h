@@ -38,7 +38,20 @@ namespace g2o {
   class CacheSE3Offset;
 
   /**
-   * \brief Offset edge
+   * \brief Offset edge.
+   * The measurement of this Edge seems to measure only a part of the transformation
+   * Between its vertices. I.e., vertex0 * offsetTo * measurement * offsetFrom = vertex1
+   *
+   * To use the offsets you need to create two ParameterSE3Offsets, e.g.
+   * auto* p1 = new ParameterSE3Offset();
+   * p1->setId(id1);//id1 is arbitrary
+   * Isometry3D measurement2vertex = ...;//Transforms points from measurement frame to vertex frame
+   * pc->setOffset(measurement2vertex);
+   * optimizer->addParameter(p1);
+   * optimizer->addParameter(p2);//created analogous to p1
+   * auto* edge = new EdgeSE3Offset();
+   * edge->setParameterId(0, id1);
+   * edge->setParameterId(1, id2);
    */
   // first two args are the measurement type, second two the connection classes
   class G2O_TYPES_SLAM3D_API EdgeSE3Offset : public EdgeSE3 {

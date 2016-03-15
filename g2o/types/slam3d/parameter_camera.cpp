@@ -93,7 +93,7 @@ namespace g2o {
 
   void CacheCamera::updateImpl(){
     CacheSE3Offset::updateImpl();
-    _w2i.matrix().topLeftCorner<3,4>() = params->Kcam() * w2n().matrix().topLeftCorner<3,4>();
+    _w2i.matrix().topLeftCorner<3,4>() = params->Kcam() * w2n().matrix().topLeftCorner<3,4>();//w2n: world to sensor (sensor = Node). w2i: world to image
   }
 
 #ifdef G2O_HAVE_OPENGL

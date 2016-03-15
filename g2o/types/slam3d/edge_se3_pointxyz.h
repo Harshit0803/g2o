@@ -55,7 +55,8 @@ namespace g2o {
 
     /** 
      * Measurement is a 3-vector in world coordinates
-     * (e.g. meter)
+     * (e.g. meter), in the sensor frame (i.e., relative 
+     * to vertex 0, except if there is an offset parameter)
      */
     virtual void setMeasurement(const Vector3D& m){
       _measurement = m;

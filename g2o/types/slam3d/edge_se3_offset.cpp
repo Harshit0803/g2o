@@ -98,12 +98,12 @@ namespace g2o {
   }
 
   void EdgeSE3Offset::computeError() {
-    Isometry3D delta=_inverseMeasurement * _cacheFrom->w2n() * _cacheTo->n2w();
+    Isometry3D delta=_inverseMeasurement * _cacheFrom->w2n() * _cacheTo->n2w();//w2n: World to node, i.e. world to sensor
     _error=internal::toVectorMQT(delta);
   }
 
   bool EdgeSE3Offset::setMeasurementFromState(){
-    Isometry3D delta = _cacheFrom->w2n() * _cacheTo->n2w();
+    Isometry3D delta = _cacheFrom->w2n() * _cacheTo->n2w();//w2n: World to node, i.e. world to sensor
     setMeasurement(delta);
     return true;
   }
