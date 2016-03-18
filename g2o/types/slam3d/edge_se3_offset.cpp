@@ -27,8 +27,12 @@
 #include "edge_se3_offset.h"
 #include "isometry3d_gradients.h"
 #include "parameter_se3_offset.h"
-
 #include <iostream>
+
+#ifdef G2O_HAVE_OPENGL
+#include "g2o/stuff/opengl_wrapper.h"
+#include "g2o/stuff/opengl_primitives.h"
+#endif
 
 namespace g2o {
   using namespace std;
@@ -143,4 +147,34 @@ namespace g2o {
       from->setEstimate(to->estimate() * virtualMeasurement.inverse());
   }
 
+#ifdef G2O_HAVE_OPENGL
+  EdgeSE3OffsetDrawAction::EdgeSE3OffsetDrawAction(): DrawAction(typeid(EdgeSE3Offset).name()){}
+
+  HyperGraphElementAction* EdgeSE3OffsetDrawAction::operator()(HyperGraph::HyperGraphElement* element, 
+               HyperGraphElementAction::Parameters* params_){
+    if (typeid(*element).name()!=_typeName)
+      return 0;
+    refreshPropertyPtrs(params_);
+    if (! _previousParams)
+      return this;
+    
+    if (_show && !_show->value())
+      return this;
+    
+    auto* edge = static_cast<EdgeSE3Offset*>(element);
+    auto* from = static_cast<VertexSE3*>(edge->vertices()[0]);
+    auto* to   = static_cast<VertexSE3*>(edge->vertices()[1]);
+    if (! from || ! to)
+      return this;
+    glPushAttrib(GL_ENABLE_BIT);
+    glDisable(GL_LIGHTING);
+    glBegin(GL_LINES);
+    glColor3f(POSE_EDGE_COLOR);
+    glVertex3f((float)from->estimate().translation().x(),(float)from->estimate().translation().y(),(float)from->estimate().translation().z());
+    glVertex3f((float)to->estimate().translation().x(),(float)to->estimate().translation().y(),(float)to->estimate().translation().z());
+    glEnd();
+    glPopAttrib();
+    return this;
+  }
+#endif
 }

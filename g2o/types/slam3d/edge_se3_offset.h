@@ -81,5 +81,17 @@ namespace g2o {
       CacheSE3Offset  *_cacheFrom, *_cacheTo;
   };
 
+#ifdef G2O_HAVE_OPENGL
+  /**
+   * \brief Visualize a 3D pose-pose constraint
+   */
+  class G2O_TYPES_SLAM3D_API EdgeSE3OffsetDrawAction: public DrawAction{
+  public:
+    EdgeSE3OffsetDrawAction();
+    virtual HyperGraphElementAction* operator()(HyperGraph::HyperGraphElement* element, 
+            HyperGraphElementAction::Parameters* params_);
+  };
+#endif
+
 } // end namespace
 #endif
