@@ -12,8 +12,8 @@ namespace g2o {
    * on the actual configuration of the nodes. It does so by
    * <ul>
    * <li> computing the expected mean of the measurement (_measurement) based on the state variables
-   * <li> computing the joint covariance matrix of all sstate variables on which the measurement depends.
-   * <li> extracting the sigma points from this covariance matrix (which is in the space if the increments used by \oplus
+   * <li> computing the joint covariance matrix of all state variables on which the measurement depends.
+   * <li> extracting the sigma points from this covariance matrix (which is in the space of the increments used by \oplus
    * <li> projecting the sigma points in the error space, and thus computing the information matrix of the labeled edge
    * </ul>
    */
@@ -38,7 +38,7 @@ protected:
   //! helper function that computes the inverse based on the sparse pattenrn
   //! @param spinv:   the output block inverse
   //! @param pattern: the blocks of the inverse covered by the edge
-  //! @returns true on successm, false on failure, .
+  //! @returns true on success, false on failure, .
   bool computePartialInverse(SparseBlockMatrix<Eigen::MatrixXd>& spinv, const std::set<std::pair<int,int> >& pattern);
 
   //! helper function that labes a specific edge based on the marginals in the sparse block inverse

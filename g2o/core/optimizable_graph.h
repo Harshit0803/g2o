@@ -395,7 +395,8 @@ namespace g2o {
         virtual const double* informationData() const = 0;
         virtual double* informationData() = 0;
 
-        //! computes the chi2 based on the cached error value, only valid after computeError has been called.
+        //! computes the chi2 (i.e., the Mahalanobis distance) based on the cached error value.
+        //! Only valid after computeError has been called.
         virtual double chi2() const = 0;
 
         /**
