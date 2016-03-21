@@ -135,6 +135,10 @@ namespace g2o {
     internal::computeEdgeSE3Gradient(E, _jacobianOplusXi , _jacobianOplusXj, Z, Xi, Xj, Pi, Pj);
   }
 
+  Isometry3D EdgeSE3Offset::getMeasurementPlusOffsets() {
+    return _cacheFrom->offsetParam()->offset() * measurement() * _cacheTo->offsetParam()->offset().inverse();
+  }
+
   void EdgeSE3Offset::initialEstimate(const OptimizableGraph::VertexSet& from_, OptimizableGraph::Vertex* /*to_*/) {
     VertexSE3 *from = static_cast<VertexSE3*>(_vertices[0]);
     VertexSE3 *to   = static_cast<VertexSE3*>(_vertices[1]);
@@ -148,7 +152,11 @@ namespace g2o {
   }
 
 #ifdef G2O_HAVE_OPENGL
-  EdgeSE3OffsetDrawAction::EdgeSE3OffsetDrawAction(): DrawAction(typeid(EdgeSE3Offset).name()){}
+  EdgeSE3OffsetDrawAction::EdgeSE3OffsetDrawAction(): EdgeSE3DrawAction() {
+    DrawAction::setTypeName(typeid(EdgeSE3Offset).name());
+  }
+
+
 
   HyperGraphElementAction* EdgeSE3OffsetDrawAction::operator()(HyperGraph::HyperGraphElement* element, 
                HyperGraphElementAction::Parameters* params_){
@@ -164,17 +172,36 @@ namespace g2o {
     auto* edge = static_cast<EdgeSE3Offset*>(element);
     auto* from = static_cast<VertexSE3*>(edge->vertices()[0]);
     auto* to   = static_cast<VertexSE3*>(edge->vertices()[1]);
+    Eigen::Vector3f fromPos = from->estimate().translation().cast<float>();
+    Eigen::Vector3f estToPos = to->estimate().translation().cast<float>();
+    Isometry3D measuredTo = (from->estimate() * edge->getMeasurementPlusOffsets());
+    Eigen::Vector3f measToPos = measuredTo.translation().cast<float>();
     if (! from || ! to)
       return this;
+
     glPushAttrib(GL_ENABLE_BIT);
     glDisable(GL_LIGHTING);
+    glPushAttrib(GL_LINE_BIT);
+    glLineWidth(EDGE_LINE_WIDTH);
     glBegin(GL_LINES);
-    glColor3f(POSE_EDGE_COLOR);
-    glVertex3f((float)from->estimate().translation().x(),(float)from->estimate().translation().y(),(float)from->estimate().translation().z());
-    glVertex3f((float)to->estimate().translation().x(),(float)to->estimate().translation().y(),(float)to->estimate().translation().z());
+    glColor3f(POSE_EDGE_OFFSET_COLOR);
+    glVertex3f(fromPos.x(),fromPos.y(),fromPos.z());
+    glVertex3f(estToPos.x(),estToPos.y(),estToPos.z());
     glEnd();
+    glPopAttrib();//restore Line width
     glPopAttrib();
+
+    if(_showMeasurementAndError && _showMeasurementAndError->value()){
+      drawMeasurementAndError(fromPos, estToPos, measToPos);
+    }
+
+    if(_showEllipsoid && _showEllipsoid->value()){
+      drawUncertainty(measuredTo, edge->information());
+    }
+
     return this;
   }
+
 #endif
+
 }
