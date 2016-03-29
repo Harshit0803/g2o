@@ -136,7 +136,7 @@ void G2oQGLViewer::init()
   //glShadeModel(GL_SMOOTH);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  setAxisIsDrawn();
+  setAxisIsDrawn(false);
 
   // don't save state
   setStateFileName(QString::null);
@@ -145,6 +145,8 @@ void G2oQGLViewer::init()
 #ifdef QGLVIEWER_DEPRECATED_MOUSEBINDING
   setMouseBinding(Qt::NoModifier, Qt::RightButton, CAMERA, ZOOM);
   setMouseBinding(Qt::NoModifier, Qt::MidButton, CAMERA, TRANSLATE);
+  setMouseBinding(Qt::NoModifier, Qt::RightButton, SHOW_ENTIRE_SCENE, true, Qt::NoButton);
+  setMouseBinding(Qt::NoModifier, Qt::LeftButton, ZOOM_TO_FIT, true, Qt::NoButton);
 #else
   setMouseBinding(Qt::RightButton, CAMERA, ZOOM);
   setMouseBinding(Qt::MidButton, CAMERA, TRANSLATE);
