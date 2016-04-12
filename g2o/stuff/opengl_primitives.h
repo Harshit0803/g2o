@@ -135,7 +135,7 @@ void G2O_OPENGL_API drawPoint(float  pointSize);
 
 #define POSE_VERTEX_COLOR 0.5f,0.5f,0.8f
 #define POSE_PARAMETER_COLOR 0.5f,0.5f,0.8f
-#define POSE_EDGE_MEASUREMENT_COLOR 0.7f,0.7f,0.1f
+#define POSE_EDGE_MEASUREMENT_COLOR 1.0f,1.0f,1.0f
 #define POSE_EDGE_ERROR_COLOR 0.7f,0.1f,0.1f
 #define POSE_EDGE_COLOR 0.4f,0.4f,0.7f
 #define POSE_EDGE_OFFSET_COLOR 0.2f,0.7f,0.2f

@@ -161,7 +161,8 @@ namespace g2o {
       glPushAttrib(GL_POLYGON_BIT);
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//Draw wireframe
       glMultMatrixd(measuredTo.matrix().data());
-      opengl::drawEllipsoid(sqrt(1./infoMat(0,0)), sqrt(1./infoMat(1,1)), sqrt(1./infoMat(2,2)));
+      EdgeSE3::InformationType cov = infoMat.inverse();
+      opengl::drawEllipsoid(3*sqrt(cov(0,0)), 3*sqrt(cov(1,1)), 3*sqrt(cov(2,2)));
       glPopAttrib();//Restore from wireframe
       glPopMatrix();
   }
@@ -198,7 +199,6 @@ namespace g2o {
     glVertex3f(fromPos.x(),fromPos.y(),fromPos.z());
     glVertex3f(estToPos.x(),estToPos.y(),estToPos.z());
     glEnd();
-    glPopAttrib();//restore Line width
 
     if(_showMeasurementAndError && _showMeasurementAndError->value()){
       drawMeasurementAndError(fromPos, estToPos, measToPos);
@@ -209,6 +209,7 @@ namespace g2o {
       drawUncertainty(measuredTo, edge->information());
     }
 
+    glPopAttrib();//restore Line width
     glPopAttrib();//restore enable bit (lighting?)
     return this;
   }
