@@ -35,7 +35,7 @@
 #include <limits>
 #include <cstddef>
 
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 
 #include "g2o_core_api.h"
 
@@ -135,7 +135,7 @@ namespace g2o {
       typedef std::set<Edge*>                           EdgeSet;
       typedef std::set<Vertex*>                         VertexSet;
 
-      typedef std::unordered_map<int, Vertex*>     VertexIDMap;
+      typedef boost::unordered_map<int, Vertex*>     VertexIDMap;
       typedef std::vector<Vertex*>                      VertexContainer;
 
       //! abstract Vertex, your types must derive from that one

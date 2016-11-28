@@ -33,6 +33,7 @@
 #endif
 
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "g2o/core/cache.h"
 
 using namespace Eigen;
@@ -153,7 +154,7 @@ namespace g2o {
 
     if(_showId && _showId->value()){
       float scale = _idSize ? _idSize->value() : 1.f;
-      drawId(std::to_string(that->id()), scale);
+      drawId(boost::lexical_cast<std::string>(that->id()), scale);
     }
     
     glPopMatrix();

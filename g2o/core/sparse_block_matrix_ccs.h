@@ -34,7 +34,7 @@
 #include "g2o/config.h"
 #include "matrix_operations.h"
 
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 
 namespace g2o {
 
@@ -219,7 +219,7 @@ namespace g2o {
       //! rows of the matrix
       int rows() const {return _rowBlockIndices.size() ? _rowBlockIndices.back() : 0;}
 
-      typedef std::unordered_map<int, MatrixType*> SparseColumn;
+      typedef boost::unordered_map<int, MatrixType*> SparseColumn;
 
       SparseBlockMatrixHashMap(const std::vector<int>& rowIndices, const std::vector<int>& colIndices) :
         _rowBlockIndices(rowIndices), _colBlockIndices(colIndices)

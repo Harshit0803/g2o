@@ -27,7 +27,8 @@
 #ifndef G2O_ROBUST_KERNEL_H
 #define G2O_ROBUST_KERNEL_H
 
-#include <memory>
+//#include <memory>
+#include <boost/shared_ptr.hpp>
 #include <Eigen/Core>
 
 #include "g2o_core_api.h"
@@ -71,7 +72,7 @@ namespace g2o {
     protected:
       double _delta;
   };
-  typedef std::shared_ptr<RobustKernel> RobustKernelPtr;
+  typedef boost::shared_ptr<RobustKernel> RobustKernelPtr;
 
 } // end namespace g2o
 

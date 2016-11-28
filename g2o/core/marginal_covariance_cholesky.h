@@ -33,7 +33,7 @@
 #include <cassert>
 #include <vector>
 
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 
 #include "g2o_core_api.h"
 
@@ -47,7 +47,7 @@ namespace g2o {
       /**
        * hash struct for storing the matrix elements needed to compute the covariance
        */
-      typedef std::unordered_map<int, double>     LookupMap;
+      typedef boost::unordered_map<int, double>     LookupMap;
     
     public:
       MarginalCovarianceCholesky();

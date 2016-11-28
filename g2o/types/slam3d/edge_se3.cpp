@@ -179,9 +179,9 @@ namespace g2o {
     if (_show && !_show->value())
       return this;
     
-    auto* edge = static_cast<EdgeSE3*>(element);
-    auto* from = static_cast<VertexSE3*>(edge->vertices()[0]);
-    auto* to   = static_cast<VertexSE3*>(edge->vertices()[1]);
+    EdgeSE3* edge = static_cast<EdgeSE3*>(element);
+    VertexSE3* from = static_cast<VertexSE3*>(edge->vertices()[0]);
+    VertexSE3* to   = static_cast<VertexSE3*>(edge->vertices()[1]);
     Eigen::Vector3f fromPos = from->estimate().translation().cast<float>();
     Eigen::Vector3f estToPos = to->estimate().translation().cast<float>();
     Isometry3D measuredTo = (from->estimate() * edge->measurement());

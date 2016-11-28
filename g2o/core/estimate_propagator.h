@@ -35,7 +35,7 @@
 #include <set>
 #include <limits>
 
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 
 namespace g2o {
 
@@ -132,7 +132,7 @@ namespace g2o {
           size_t operator ()(const OptimizableGraph::Vertex* v) const { return v->id();}
       };
 
-      typedef std::unordered_map<OptimizableGraph::Vertex*, AdjacencyMapEntry, VertexIDHashFunction> AdjacencyMap;
+      typedef boost::unordered_map<OptimizableGraph::Vertex*, AdjacencyMapEntry, VertexIDHashFunction> AdjacencyMap;
 
     public:
       EstimatePropagator(OptimizableGraph* g);

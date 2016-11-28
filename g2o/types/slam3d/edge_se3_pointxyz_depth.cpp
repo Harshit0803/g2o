@@ -252,9 +252,9 @@ namespace g2o {
     if (_show && !_show->value())
       return this;
     
-    auto* edge = static_cast<EdgeSE3PointXYZDepth*>(element);
-    auto* from = static_cast<VertexSE3*>(edge->vertices()[0]);
-    auto* to   = static_cast<VertexPointXYZ*>(edge->vertices()[1]);
+    EdgeSE3PointXYZDepth* edge = static_cast<EdgeSE3PointXYZDepth*>(element);
+    VertexSE3* from = static_cast<VertexSE3*>(edge->vertices()[0]);
+    VertexPointXYZ* to   = static_cast<VertexPointXYZ*>(edge->vertices()[1]);
     Eigen::Vector3f fromPos = from->estimate().translation().cast<float>();
     Eigen::Vector3f estToPos = to->estimate().cast<float>();
     Eigen::Vector3f measToPos = (from->estimate() * edge->getReprojectedMeasurement()).cast<float>();
@@ -282,7 +282,7 @@ namespace g2o {
 
 
     if(_showEllipsoid && _showEllipsoid->value()){
-      auto infoMatLvalue = edge->getReprojectedInformation();
+      EdgeSE3PointXYZDepth::InformationType infoMatLvalue = edge->getReprojectedInformation();
       drawUncertainty(measuredTo, infoMatLvalue);
     }
 
